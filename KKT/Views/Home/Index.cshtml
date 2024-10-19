@@ -1,0 +1,31 @@
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TSach>
+
+@foreach (var item in Model)
+{
+	<div class="col-lg-3 mb-4 text-center">
+		<div class="product-entry border">
+			<a href="#" class="prod-img">
+				<img src="@Url.Content("/Sach/" + item.FileAnh)" class="img-fluid" alt="Free html5 bootstrap 4 template">
+			</a>
+			<div class="desc">
+				<h2><a href="#">@item.MaLoai</a></h2>
+				<span class="price">@item.GiaTriSach</span>
+			</div>
+			<div class="desc">
+				<h2><a asp-action="SuaSanPham" asp-route-maSach="@item.MaSach">Sửa</a></h2>
+			</div>
+		</div>
+	</div>
+}
+
+@Html.PagedListPager(
+									Model,
+									page => Url.Action("Index", new { page = page }),
+									new PagedListRenderOptions
+					   {
+						   LiElementClasses = new List<string> { "page-item" },
+						   PageClasses = new List<string> { "page-link" }
+					   }
+									)
+

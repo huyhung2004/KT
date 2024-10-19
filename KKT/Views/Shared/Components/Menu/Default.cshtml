@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TLoaiSach>
+<ul>
+    @foreach (var item in Model)
+    {
+
+
+        var url = "https://localhost:7077/api/KT/" + item.MaLoai;
+        <li><a onclick="show('@url')">@item.TenLoai</a></li>
+
+    }
+
+</ul>
+<script>
+     function show(getUrl) {
+         var str = '';
+         $.ajax({
+             type: 'GET',
+             url: getUrl,
+             dataType: 'json',
+             success: function (data) {
+                 console.log(data); // Kiểm tra dữ liệu trả về
+                 $.each(data, function (key, val) {
+                    str += `<div class="col-lg-3 mb-4 text-center">
+            <div class="product-entry border">
+                <a href="#" class="prod-img">
+                            <img src="/Sach/${val.fileAnh}" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                </a>
+                <div class="desc">
+                                    <h2><a href="#">${val.maLoai}</a></h2>
+                                <span class="price">${val.giaTriSach}</span>
+                </div>
+            </div>
+        </div>`;
+                 });
+                 $('#displayProducts').html(str);
+             },
+             error: function (xhr) {
+                 console.error('Error:', xhr); // Kiểm tra lỗi
+                 alert(xhr.responseText);
+             }
+         });
+     }
+</script>
+
+
+
